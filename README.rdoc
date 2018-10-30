@@ -1,0 +1,4 @@
+1. I have login with github credentials.
+2. I list out the user's details.
+3. I list out the user's public repository lists.
+4. I don't have commits, so I can not perform on commits task.

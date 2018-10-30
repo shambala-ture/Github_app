@@ -1,0 +1,53 @@
+<% if current_user.blank? %>
+  <h1>Please Sign In</h1>
+  <%= link_to 'Sign In with Github', '/auth/github' %>
+<% else %>
+<h2> User information </h2>
+<table>
+  <tr>
+    <th>UserName</th>
+    <th>Email</th>
+    <th>Provider</th>
+    <th>Repository Count</th>
+  </tr>
+  <tr>
+    <td><%= current_user.username %></td>
+    <td><%= current_user.email %></td>
+    <td><%= current_user.provider %></td>
+    <td><%= current_user.repo_count %></td>
+  </tr>
+</table><br>
+<h2> <%= current_user.username %> user public repository list </h2>
+  <% @user_repo_info.each do |repo| %>
+    <% repo.each do |repos| %>
+      <!-- <tr>
+        <td><strong><p class="repo_link"><%= repos["name"]%></p></strong></td>
+      </tr> -->
+      <table>
+        <tr>
+          <td><strong><p class="repo_link"><%= repos["name"]%></p></strong></td>
+          <% if repos["description"].present? %>
+            <td><%= repos["description"]%></td>
+          <% else %>
+            <td><p class="repo_info">No description present</p></td>
+          <% end %>
+        </tr><br>
+      </table>
+    <% end %>
+  <% end %>
+<br>
+
+<h2>User commits information</h2>
+  <p> <%= "User not having any commits" if !@user_commits_info.present? %> </p>
+  <%= button_to "Sign Out", signout_path, method: :delete %>
+<% end %>
+
+<script>
+  $(document).ready(function(){
+    $(".repo_info").css({'display':'none'});
+    $(".repo_link").click(function(){
+      $(".repo_info").css({'display':'block'});
+    });
+    $(".repo_link").css({'cursor':'pointer'});
+});
+</script>
